@@ -1,5 +1,6 @@
 package com.example.itemsappbackend.service;
 
+import com.example.itemsappbackend.exception.ItemNotFoundException;
 import com.example.itemsappbackend.model.Item;
 import com.example.itemsappbackend.repository.ItemRepository;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,14 @@ public class ItemService implements IItemService{
 
     @Override
     public Item findById(Long id) {
-        return itemRepository.findById(id).get();
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException(id));
+    }
+
+    @Override
+    public void deleteItemById(Long id) {
+        itemRepository.findById(id)
+                .ifPresentOrElse(itemRepository::delete,
+                        () -> {throw new ItemNotFoundException(id);});
     }
 }

@@ -13,4 +13,6 @@ public interface IItemService {
 
     public Item saveItem(Item item);
     public Item findById(Long id);
+
+    public void deleteItemById(Long id);
 }

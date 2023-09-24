@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 //@RequestMapping("/items")
 public class ItemController {
     @Autowired
@@ -59,5 +60,9 @@ public class ItemController {
         return ResponseEntity.created(locationOfNewItem).build();
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        itemService.deleteItemById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
