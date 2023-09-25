@@ -20,7 +20,7 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/items/{id}")
     public ResponseEntity<Item> findById(@PathVariable Long id) {
         Item item = itemService.findById(id);
         if(item != null) {
@@ -60,9 +60,15 @@ public class ItemController {
         return ResponseEntity.created(locationOfNewItem).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/items/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemService.deleteItemById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/items/{id}")
+    public ResponseEntity<Void> putItem(@RequestBody Item updatedItem, @PathVariable Long id) {
+        itemService.updateItem(updatedItem, id);
         return ResponseEntity.noContent().build();
     }
 }

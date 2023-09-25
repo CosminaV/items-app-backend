@@ -52,4 +52,15 @@ public class ItemService implements IItemService{
                 .ifPresentOrElse(itemRepository::delete,
                         () -> {throw new ItemNotFoundException(id);});
     }
+
+    @Override
+    public Item updateItem(Item updatedItem, Long id) {
+        return itemRepository.findById(id)
+                .map(item -> {
+                    item.setName(updatedItem.getName());
+                    item.setDescription(updatedItem.getDescription());
+                    item.setPrice(updatedItem.getPrice());
+                    return itemRepository.save(item);
+                }).orElseThrow(() -> new ItemNotFoundException(id));
+    }
 }

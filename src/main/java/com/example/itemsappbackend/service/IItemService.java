@@ -15,4 +15,5 @@ public interface IItemService {
     public Item findById(Long id);
 
     public void deleteItemById(Long id);
+    public Item updateItem(Item updatedItem, Long id);
 }
